@@ -1,0 +1,17 @@
+.language-selector {
+  position: relative;
+}
+
+.language-option:hover {
+  background-color: #4E31AA !important;
+  color: white !important;
+}
+
+.language-option:hover span {
+  color: white !important;
+}
+
+.language-selector button:hover {
+  background-color: #4E31AA;
+  color: white;
+}
