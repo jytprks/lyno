@@ -3,7 +3,7 @@
 }
 
 .language-option:hover {
-  background-color: #4E31AA !important;
+  background-color: #393053 !important;
   color: white !important;
 }
 
@@ -12,6 +12,6 @@
 }
 
 .language-selector button:hover {
-  background-color: #4E31AA;
+  background-color: #393053;
   color: white;
 }

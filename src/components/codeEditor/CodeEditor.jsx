@@ -70,7 +70,7 @@ const CodeEditor = ({ handleOutPut }) => {
           onClick={runCode}
           style={{
             backgroundColor: "#393053",
-            color: "grey",
+            color: "white",
             padding: "8px 16px",
             border: "none",
             borderRadius: "4px",
@@ -93,7 +93,7 @@ const CodeEditor = ({ handleOutPut }) => {
       >
         <div
           style={{
-            background: "#252526",
+            background: "#393053",
             padding: "4px 8px",
             display: "flex",
             alignItems: "center",

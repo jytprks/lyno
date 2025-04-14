@@ -14,7 +14,7 @@ const LanguageSelector = ({ language, onSelect }) => {
         onClick={toggleMenu}
         style={{
           backgroundColor: "#393053",
-          color: "grey",
+          color: "white",
           padding: "8px 16px",
           border: "none",
           borderRadius: "4px",

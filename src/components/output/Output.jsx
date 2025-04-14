@@ -11,7 +11,7 @@ const Output = ({ value }) => {
     >
       <div
         style={{
-          background: "#252526",
+          background: "#393053",
           padding: "4px 8px",
           display: "flex",
           alignItems: "center",
@@ -24,7 +24,7 @@ const Output = ({ value }) => {
       <div
         className="output"
         style={{
-          height: "calc(100% - 50px)", // Subtract header height
+          height: "100%",
           backgroundColor: "#0F0F0F",
           padding: "10px",
           color: "#D4D4D4",

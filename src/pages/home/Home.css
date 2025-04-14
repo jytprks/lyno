@@ -1,0 +1,65 @@
+.homePageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.formWrapper {
+  background-color: #393053;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  max-width: 90%;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.mainLabel {
+  margin-bottom: 10px;
+  margin-top: 0px;
+}
+
+.appName {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.inputBox {
+  padding: 10px;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  margin-top: 10px;
+}
+
+.btn {
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.joinBtn {
+  background: #f75a5a;
+  margin-top: 10px;
+  width: 100px;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+.createInfo {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createNewBtn {
+  color: #f75a5a;
+}

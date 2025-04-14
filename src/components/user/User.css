@@ -1,0 +1,23 @@
+.userCard {
+  height: 160px;
+  border: solid #393053;
+  margin: 10px 0 10px 0;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nameInitial {
+  background-color: #393053;
+  width: 54px;
+  height: 54px;
+  border-radius: 10%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.userDiv {
+  margin-bottom: 10px;
+}
