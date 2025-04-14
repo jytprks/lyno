@@ -1,5 +1,5 @@
 import "./User.css";
-const User = ({ userName }) => {
+const userCard = ({ userName }) => {
   return (
     <div className="userDiv">
       <span className="name">{userName}</span>
@@ -9,4 +9,4 @@ const User = ({ userName }) => {
     </div>
   );
 };
-export default User;
+export default userCard;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Output from "../../components/output/Output";
 import CodeEditor from "../../components/codeEditor/CodeEditor";
-import User from "../../components/user/user";
+import Usercard from "../../components/user/UserCard";
 
 const Editor = () => {
   const [outputValue, setOutPut] = useState(null);
@@ -61,7 +61,7 @@ const Editor = () => {
           >
             <div className="connected">
               {connected.map((user) => (
-                <User key={user.socketId} userName={user.userName} />
+                <Usercard key={user.socketId} userName={user.userName} />
               ))}
             </div>
           </div>
