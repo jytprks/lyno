@@ -2,11 +2,18 @@ import express from "express";
 import { Server } from "socket.io";
 import http from "http";
 import ACTION from "./src/actions.js";
+import serverless from "serverless-http";
+import cors from "cors";
+
+const router = express.Router();
 
 const app = express();
 const server = http.createServer(app);
 
-app.get("/health", (req, res) => {
+app.use(cors());
+app.use(express.json());
+
+router.get("/health", (req, res) => {
   res.status(200).json({
     status: "healthy",
     timestamp: new Date().toISOString(),
