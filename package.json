@@ -5,16 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run build:functions",
-    "build:functions": "netlify-lambda build netlify/functions",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "server.dev": "nodemon server.js",
     "server.prod": "node server.js"
   },
   "dependencies": {
-    "serverless-http": "^3.2.0",
-    "netlify-lambda": "^2.0.16",
     "@monaco-editor/react": "^4.7.0",
     "axios": "^1.6.7",
     "express": "^5.1.0",
