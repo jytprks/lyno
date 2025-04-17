@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Home.css";  
+import style from "./Home.module.css";
 import { v4 as uuidV4 } from "uuid";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -32,14 +32,14 @@ const Home = () => {
     });
   };
   return (
-    <div className="homePageWrapper">
-      <div className="formWrapper">
-        <h1 className="appName">LYNO - CODE</h1>
-        <h4 className="mainLabel">Paste invitation room Id</h4>
-        <div className="inputGroup">
+    <div className={style.homePageWrapper}>
+      <div className={style.formWrapper}>
+        <h1 className={style.appName}>LYNO - CODE</h1>
+        <h4 className={style.mainLabel}>Paste invitation room Id</h4>
+        <div className={style.inputGroup}>
           <input
             type="text"
-            className="inputBox"
+            className={style.inputBox}
             placeholder="ROOM ID"
             onChange={(e) => setRoomId(e.target.value)}
             value={roomId}
@@ -47,19 +47,19 @@ const Home = () => {
           />
           <input
             type="text"
-            className="inputBox"
+            className={style.inputBox}
             placeholder="USER NAME"
             onChange={(e) => setUserName(e.target.value)}
             value={userName}
             onKeyUp={handleInputEnter}
           />
-          <button className="btn joinBtn" onClick={joinRoom}>
+          <button className={`${style.btn} ${style.joinBtn}`} onClick={joinRoom}>
             Join
           </button>
         </div>
-        <span className="createInfo">
+        <span className={style.createInfo}>
           If you don't have an invite then create &nbsp;{" "}
-          <a onClick={createNewRoom} href="" className="createNewBtn">
+          <a onClick={createNewRoom} href="" className={style.createNewBtn}>
             new room
           </a>
         </span>

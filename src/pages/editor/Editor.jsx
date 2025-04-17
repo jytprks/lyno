@@ -1,87 +1,82 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Output from "../../components/output/Output";
 import CodeEditor from "../../components/codeEditor/CodeEditor";
 import Usercard from "../../components/user/UserCard";
+import styles from "./Editor.module.css";
+import { initSocket } from "../../socket";
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import ACTION from "../../actions";
+import toast from "react-hot-toast";
 
 const Editor = () => {
+  const socketRef = useRef(null);
+  const navigator = useNavigate();
+  const location = useLocation();
+  const { roomId } = useParams();
   const [outputValue, setOutPut] = useState(null);
-  const [connected, setConnected] = useState([
-    { socketId: 1, userName: "JyotiPrakash Ghorai" },
-    { socketId: 2, userName: "Rupashri Parial Ghorai" },
-    { socketId: 1, userName: "JyotiPrakash Ghorai" },
-  ]);
+  const [connected, setConnected] = useState([]);
+  useEffect(() => {
+    const init = async () => {
+      socketRef.current = await initSocket();
+      socketRef.current.on("connect_error", (err) => handleError(err));
+      socketRef.current.on("connect_timeout", (err) => handleError(err));
+      socketRef.current.on("connect_failed", (err) => handleError(err));
+
+      function handleError(err) {
+        console.log("socket error", err);
+        toast.error("Socket connection failed, try again later");
+        navigator("/");
+      }
+      socketRef.current.emit(ACTION.JOIN, {
+        roomId,
+        userName: location.state?.userName,
+      });
+      socketRef.current.on(ACTION.JOINED, ({ clients, socketId, userName }) => {
+        if (userName !== location.state?.userName) {
+          toast.success(`${userName} joined the room`);
+        }
+        setConnected(clients);
+      });
+    };
+    init();
+  }, []);
   const handleOutPut = (value) => {
     setOutPut(value);
   };
+
+  if (!location.state) {
+    <Navigate to="/" replace />;
+  }
+
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100%",
-        height: "100vh",
-        gap: "16px",
-      }}
-    >
-      <div
-        className="participent-viv"
-        style={{
-          flex: "0.2",
-          minWidth: "20%",
-        }}
-      >
-        <div
-          style={{
-            height: "100%",
-            width: "100%",
-            border: "1px solid #333",
-            borderRadius: "4px",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              background: "#393053",
-              padding: "4px 8px",
-              display: "flex",
-              alignItems: "center",
-              borderBottom: "1px solid #333",
-            }}
-          >
+    <div className={styles.editorContainer}>
+      <div className={styles.participantDiv}>
+        <div className={styles.participantContainer}>
+          <div className={styles.header}>
             <h1 className="appName">LYNO - CODE</h1>
           </div>
-          <div
-            className="output"
-            style={{
-              height: "calc(100% - 50px)",
-              backgroundColor: "#0F0F0F",
-              padding: "10px",
-              color: "#D4D4D4",
-              overflow: "auto",
-            }}
-          >
-            <div className="connected">
-              {connected.map((user) => (
-                <Usercard key={user.socketId} userName={user.userName} />
-              ))}
+          <div className={styles.connectedDiv}>
+            {connected.map((user) => (
+              <Usercard key={user.socketId} userName={user.userName} />
+            ))}
+            <div className={styles.buttonDiv}>
+              <button className={styles.btn}>Copy room Id</button>
+              <button className={styles.btn}>Leave</button>
             </div>
           </div>
         </div>
         <div></div>
       </div>
-      <div
-        className="code-pad"
-        style={{
-          flex: "0.8",
-          minWidth: "80%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        <div style={{ flex: "0.6", minHeight: "60%" }}>
+      <div className={styles.codePad}>
+        <div className={styles.editorSection}>
           <CodeEditor handleOutPut={handleOutPut} />
         </div>
-        <div style={{ flex: "0.4", minHeight: "30%" }}>
+        <div className={styles.outputSection}>
           <Output value={outputValue} />
         </div>
       </div>
