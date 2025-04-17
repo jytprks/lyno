@@ -1,23 +1,19 @@
 import express from "express";
 import { Server } from "socket.io";
-import serverless from "serverless-http";
-import ACTION from "../../../src/actions.js";
+import http from "http";
+import ACTION from "./src/actions.js";
 
 const app = express();
-const userSocketMap = {};
+const server = http.createServer(app);
 
-const handler = serverless(app);
 
-const io = new Server({
-  cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
-});
+const io = new Server(server);
+const userSocketMap = {}; // Store user socket ids
 
 io.on("connection", (socket) => {
   console.log("A user connected", socket.id);
   socket.on(ACTION.JOIN, ({ roomId, userName }) => {
+    console.log("User joined", roomId, userName);
     userSocketMap[socket.id] = { userName, roomId };
     socket.join(roomId);
     const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
@@ -35,4 +31,8 @@ io.on("connection", (socket) => {
   });
 });
 
-export { handler };
+const PORT = process.env.PORT || 5000;
+
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
