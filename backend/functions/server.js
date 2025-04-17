@@ -6,6 +6,13 @@ import ACTION from "./src/actions.js";
 const app = express();
 const server = http.createServer(app);
 
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
 
 const io = new Server(server);
 const userSocketMap = {}; // Store user socket ids
@@ -30,6 +37,9 @@ io.on("connection", (socket) => {
     });
   });
 });
+
+app.use("/.netlify/functions/server", router);
+module.exports.handler = serverless(app);
 
 const PORT = process.env.PORT || 5000;
 
