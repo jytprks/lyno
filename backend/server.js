@@ -1,22 +1,42 @@
-const express = require("express");
-const cors = require("express");
+import express from "express";
+import { Server } from "socket.io";
+import http from "http";
+import ACTION from "./src/actions.js";
 
 const app = express();
-// Enable CORS
-app.use(cors());
+const server = http.createServer(app);
 
-// Use environment variable for PORT or fallback to 3000
-const PORT = process.env.PORT || 3000;
+const io = new Server(server);
+const userSocketMap = {}; // Store user socket ids
+
+io.on("connection", (socket) => {
+  console.log("A user connected", socket.id);
+  socket.on(ACTION.JOIN, ({ roomId, userName }) => {
+    console.log("User joined", roomId, userName);
+    userSocketMap[socket.id] = { userName, roomId };
+    socket.join(roomId);
+    const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []).map(
+      (id) => {
+        return { socketId: id, userName: userSocketMap[id]?.userName };
+      }
+    );
+    clients.forEach(({ socketId }) => {
+      io.to(socketId).emit(ACTION.JOINED, {
+        socketId: socket.id,
+        clients,
+        userName,
+      });
+    });
+  });
+});
 
 app.get("/", (req, res) => {
   res.status(200);
-  res.send("Welcome to root URL of Server");
+  res.send("Welcome lyno code server Server");
 });
 
-app.listen(PORT, (error) => {
-  if (!error)
-    console.log(
-      "Server is Successfully Running, and App is listening on port " + PORT
-    );
-  else console.log("Error occurred, server can't start", error);
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
