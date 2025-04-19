@@ -1,7 +1,7 @@
 import express from "express";
 import { Server } from "socket.io";
 import http from "http";
-import ACTION from "./src/actions.js";
+import ACTION from "./actions.js"; // Add .js extension
 
 const app = express();
 const server = http.createServer(app);
